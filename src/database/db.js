@@ -1,7 +1,11 @@
 import { Sequelize } from "sequelize";
+import dotenv from 'dotenv';
 
-const db = new Sequelize('data_enfermedades', 'root', 'no7MUE7j82pFZCJfWXV6hbTZj6XSIhjP', {
-    host: 'dpg-ckopikvkc2qc73b4jpbg-a.singapore-postgres.render.com',
+dotenv.config();
+
+
+const db = new Sequelize(process.env.DATA_BASE, process.env.USER, process.env.PASS, {
+    host: process.env.HOST,
     port: 5432, // The port number of your PostgreSQL database
     dialect: 'postgres',
     dialectOptions: {
