@@ -21,7 +21,6 @@ router.use('/recomendacion', recomendacion);
 
 router.use('/tratamiento', tratamiento);
 
-
 router.use('/enfermedad_producto', enfermedad_producto);
 
 router.use('/enfermedad_recomendacion', enfermedad_recomendacion);
