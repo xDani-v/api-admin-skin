@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', getAll);
 router.get('/:id', getproducto);
-router.post('/enfermedad', listarProductosPorEnfermedad);
+router.get('/enfermedad/:id', listarProductosPorEnfermedad);
 router.post('/', createproducto);
 router.put('/:id', updateproducto);
 router.delete('/:id', deleteproducto);

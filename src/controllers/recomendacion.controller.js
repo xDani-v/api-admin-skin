@@ -72,12 +72,12 @@ export const deleterecomendacion = async (req, res) => {
 }
 
 export const listarRecomendacionesPorEnfermedad = async (req, res) => {
-    const nombreEnfermedad = req.body.nombreEnfermedad; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+    const id = req.params.id; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
 
     try {
         const result = await db.query('SELECT * FROM listar_recomendaciones_por_enfermedad($nombreEnfermedad)', {
             bind: {
-                nombreEnfermedad: nombreEnfermedad, // Usa el nombre del parámetro en la consulta
+                nombreEnfermedad: id, // Usa el nombre del parámetro en la consulta
             },
         });
         res.json(result[0]);

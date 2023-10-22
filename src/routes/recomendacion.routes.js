@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', getAll);
 router.get('/:id', getrecomendacion);
-router.post('/enfermedad', listarRecomendacionesPorEnfermedad);
+router.get('/enfermedad/:id', listarRecomendacionesPorEnfermedad);
 router.post('/', createrecomendacion);
 router.put('/:id', updaterecomendacion);
 router.delete('/:id', deleterecomendacion);
