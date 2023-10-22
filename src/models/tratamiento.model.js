@@ -5,7 +5,8 @@ const Tratamiento = db.define("tratamiento", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: true
     },
     nombre_del_tratamiento: {
         type: DataTypes.STRING(255),

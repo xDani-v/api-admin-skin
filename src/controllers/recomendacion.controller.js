@@ -1,5 +1,5 @@
 import recomendacion_model from "../models/recomendacion.model.js";
-import EnfermedadRecomendacion from "../models/enfermedad_recomendacion.model.js"; // Importa el modelo de la tabla de relación
+import db from "../database/db.js";
 
 //metodos crud
 
@@ -71,23 +71,16 @@ export const deleterecomendacion = async (req, res) => {
     }
 }
 
-export const getRecomendacionesForEnfermedad = async (req, res) => {
+export const listarRecomendacionesPorEnfermedad = async (req, res) => {
+    const nombreEnfermedad = req.body.nombreEnfermedad; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+
     try {
-        const { enfermedadId } = req.params; // Obtén el ID de la enfermedad desde los parámetros de la solicitud
-
-        // Realiza una consulta en la tabla de relación para encontrar las recomendaciones relacionadas con la enfermedad
-        const enfermedadRecomendaciones = await EnfermedadRecomendacion.findAll({
-            where: { id_enfermedad: enfermedadId },
-            include: Recomendacion // Incluye los datos de las recomendaciones relacionadas
+        const result = await db.query('SELECT * FROM listar_recomendaciones_por_enfermedad($nombreEnfermedad)', {
+            bind: {
+                nombreEnfermedad: nombreEnfermedad, // Usa el nombre del parámetro en la consulta
+            },
         });
-
-        if (enfermedadRecomendaciones.length === 0) {
-            return res.status(404).json({ message: "No se encontraron recomendaciones para esta enfermedad" });
-        }
-
-        // Accede a las recomendaciones relacionadas a través de la propiedad generada por Sequelize
-        const recomendaciones = enfermedadRecomendaciones.map((relacion) => relacion.recomendacion);
-        res.json(recomendaciones);
+        res.json(result[0]);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

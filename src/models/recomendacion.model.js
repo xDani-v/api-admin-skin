@@ -5,7 +5,8 @@ const Recomendacion = db.define("recomendacion", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: true
     },
     nombre_de_la_recomendacion: {
         type: DataTypes.STRING(255),
@@ -18,5 +19,7 @@ const Recomendacion = db.define("recomendacion", {
     tableName: "recomendaciones",
     timestamps: false
 });
+
+
 
 export default Recomendacion;

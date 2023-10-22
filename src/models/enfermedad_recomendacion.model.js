@@ -1,5 +1,7 @@
 import db from "../database/db.js";
 import { DataTypes } from "sequelize";
+import Recomendacion from "./recomendacion.model.js";
+import Enfermedad from "./enfermedad.model.js";
 
 const EnfermedadRecomendacion = db.define("enfermedad_recomendacion", {
     id: {
@@ -25,5 +27,7 @@ const EnfermedadRecomendacion = db.define("enfermedad_recomendacion", {
     tableName: "enfermedad_recomendacion",
     timestamps: false
 });
+EnfermedadRecomendacion.belongsTo(Enfermedad, { foreignKey: 'id_enfermedad' });
+EnfermedadRecomendacion.belongsTo(Recomendacion, { foreignKey: 'id_recomendacion' });
 
 export default EnfermedadRecomendacion;

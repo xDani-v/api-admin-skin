@@ -1,5 +1,5 @@
 import tratamiento_model from "../models/tratamiento.model.js";
-import EnfermedadTratamiento from "../models/enfermedad_tratamiento.model.js";
+import db from "../database/db.js";
 //metodos crud
 
 export const getAll = async (req, res) => {
@@ -70,23 +70,16 @@ export const deletetratamiento = async (req, res) => {
     }
 }
 
-export const getTratamientosForEnfermedad = async (req, res) => {
+export const listarTratamientoPorEnfermedad = async (req, res) => {
+    const nombreEnfermedad = req.body.nombreEnfermedad; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+
     try {
-        const { enfermedadId } = req.params; // Obtén el ID de la enfermedad desde los parámetros de la solicitud
-
-        // Realiza una consulta en la tabla de relación para encontrar los tratamientos relacionados con la enfermedad
-        const enfermedadTratamientos = await EnfermedadTratamiento.findAll({
-            where: { id_enfermedad: enfermedadId },
-            include: Tratamiento // Incluye los datos de los tratamientos relacionados
+        const result = await db.query('SELECT * FROM listar_tratamientos_por_enfermedad($nombreEnfermedad)', {
+            bind: {
+                nombreEnfermedad: nombreEnfermedad, // Usa el nombre del parámetro en la consulta
+            },
         });
-
-        if (enfermedadTratamientos.length === 0) {
-            return res.status(404).json({ message: "No se encontraron tratamientos para esta enfermedad" });
-        }
-
-        // Accede a los tratamientos relacionados a través de la propiedad generada por Sequelize
-        const tratamientos = enfermedadTratamientos.map((relacion) => relacion.tratamiento);
-        res.json(tratamientos);
+        res.json(result[0]);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

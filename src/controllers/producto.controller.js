@@ -1,6 +1,5 @@
 import producto_model from "../models/producto.model.js";
-import EnfermedadProducto from "../models/enfermedad_producto.model.js";
-
+import db from "../database/db.js";
 //metodos crud
 
 export const getAll = async (req, res) => {
@@ -71,23 +70,16 @@ export const deleteproducto = async (req, res) => {
     }
 }
 
-export const getProductsForEnfermedad = async (req, res) => {
+export const listarProductosPorEnfermedad = async (req, res) => {
+    const nombreEnfermedad = req.body.nombreEnfermedad; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+
     try {
-        const { enfermedadId } = req.params; // Obtén el ID de la enfermedad desde los parámetros de la solicitud
-
-        // Realiza una consulta en la tabla de relación para encontrar los productos relacionados con la enfermedad
-        const enfermedadProductos = await EnfermedadProducto.findAll({
-            where: { id_enfermedad: enfermedadId },
-            include: Producto // Incluye los datos de los productos relacionados
+        const result = await db.query('SELECT * FROM listar_productos_por_enfermedad($nombreEnfermedad)', {
+            bind: {
+                nombreEnfermedad: nombreEnfermedad, // Usa el nombre del parámetro en la consulta
+            },
         });
-
-        if (enfermedadProductos.length === 0) {
-            return res.status(404).json({ message: "No se encontraron productos para esta enfermedad" });
-        }
-
-        // Accede a los productos relacionados a través de la propiedad generada por Sequelize
-        const productos = enfermedadProductos.map((relacion) => relacion.producto);
-        res.json(productos);
+        res.json(result[0]);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
