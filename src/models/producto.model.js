@@ -5,7 +5,8 @@ const Producto = db.define("producto", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: true
     },
     nombre_del_producto: {
         type: DataTypes.STRING(255),
@@ -22,7 +23,8 @@ const Producto = db.define("producto", {
         type: DataTypes.STRING(255)
     },
     imagen: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull: true
     }
 }, {
     tableName: "productos",

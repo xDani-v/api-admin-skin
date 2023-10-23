@@ -29,32 +29,62 @@ export const getproducto = async (req, res) => {
     }
 }
 
-
 export const createproducto = async (req, res) => {
     try {
-        await producto_model.create(req.body);
+        // Obtiene los datos de la imagen en formato base64 desde el cuerpo de la solicitud
+        const { nombre_del_producto, descripcion_del_producto, precio, disponibilidad, imagenBase64 } = req.body;
+
+        // Convierte la imagen en un array de bytes (Buffer) a partir del base64
+        const imagenData = Buffer.from(imagenBase64, 'base64');
+
+        // Crea el producto con la imagen en formato BYTEA
+        await producto_model.create({
+            nombre_del_producto,
+            descripcion_del_producto,
+            precio,
+            disponibilidad,
+            imagen: imagenData
+        });
+
         res.json({
             "message": "Registro creado"
         });
-
     } catch (error) {
-        res.json({ message: error.message })
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 export const updateproducto = async (req, res) => {
     try {
-        await producto_model.update(req.body, {
-            where: { id: req.params.id }
-        });
+        // Obtiene los datos de la imagen en formato base64 desde el cuerpo de la solicitud
+        const { nombre_del_producto, descripcion_del_producto, precio, disponibilidad, imagenBase64 } = req.body;
+
+        // Convierte la imagen en un array de bytes (Buffer) a partir del base64
+        const imagenData = Buffer.from(imagenBase64, 'base64');
+
+        // Realiza la actualización del producto, incluyendo la imagen en formato BYTEA
+        await producto_model.update(
+            {
+                nombre_del_producto,
+                descripcion_del_producto,
+                precio,
+                disponibilidad,
+                imagen: imagenData
+            },
+            {
+                where: { id: req.params.id }
+            }
+        );
+
         res.json({
             "message": "Registro actualizado"
         });
-
     } catch (error) {
-        res.json({ message: error.message })
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
 
 export const deleteproducto = async (req, res) => {
     try {
