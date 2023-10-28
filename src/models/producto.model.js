@@ -23,7 +23,7 @@ const Producto = db.define("producto", {
         type: DataTypes.STRING(255)
     },
     imagen: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true
     }
 }, {

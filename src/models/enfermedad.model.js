@@ -5,7 +5,8 @@ const Enfermedad = db.define("enfermedad", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
+        allowNull: true
     },
     nombre_de_la_enfermedad: {
         type: DataTypes.STRING(255),
