@@ -1,5 +1,5 @@
 import enfermedad_recomendacion_model from "../models/enfermedad_recomendacion.model.js";
-
+import db from "../database/db.js";
 //metodos crud
 
 export const getAll = async (req, res) => {
@@ -69,3 +69,34 @@ export const deleteenfermedad_recomendacion = async (req, res) => {
         res.json({ message: error.message })
     }
 }
+
+
+export const listarRecimendacionPorEnfermedad = async (req, res) => {
+    const id = req.params.id; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+
+    try {
+        const result = await db.query('SELECT * FROM listar_recomendaciones_por_enfermedad($nombreEnfermedad)', {
+            bind: {
+                nombreEnfermedad: id, // Usa el nombre del parámetro en la consulta
+            },
+        });
+        res.json(result[0]);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const listarNoRecomendacionesPorEnfermedad = async (req, res) => {
+    const id = req.params.id; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
+
+    try {
+        const result = await db.query('SELECT * FROM obtener_recomendaciones_no_relacionadas($nombreEnfermedad)', {
+            bind: {
+                nombreEnfermedad: id, // Usa el nombre del parámetro en la consulta
+            },
+        });
+        res.json(result[0]);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
