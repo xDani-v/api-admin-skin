@@ -90,7 +90,7 @@ export const listarNoRecomendacionesPorEnfermedad = async (req, res) => {
     const id = req.params.id; // Suponiendo que el nombre de la enfermedad se pasa en el cuerpo de la solicitud
 
     try {
-        const result = await db.query('SELECT * FROM obtener_recomendaciones_no_relacionadas($nombreEnfermedad)', {
+        const result = await db.query('SELECT * FROM obtener_recomendaciones_no_relacionados($nombreEnfermedad)', {
             bind: {
                 nombreEnfermedad: id, // Usa el nombre del parámetro en la consulta
             },
