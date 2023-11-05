@@ -8,6 +8,7 @@ import login from "../routes/login.routes.js";
 import enfermedad_producto from "../routes/enfermedad_producto.routes.js";
 import enfermedad_recomendacion from "../routes/enfermedad_recomendacion.routes.js";
 import enfermedad_tratamiento from "../routes/enfermedad_tratamiento.routes.js";
+import dermatologo from "../routes/dermatologo.routes.js";
 
 const router = express.Router();
 
@@ -27,7 +28,7 @@ router.use('/enfermedad_recomendacion', enfermedad_recomendacion);
 
 router.use('/enfermedad_tratamiento', enfermedad_tratamiento);
 
-
+router.use('/dermatologo', dermatologo);
 
 
 export default router;
