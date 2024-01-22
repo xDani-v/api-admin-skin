@@ -1,7 +1,11 @@
 import dermatologo_model from "../models/dermatologo.model.js";
 
-//metodos crud
-
+/**
+ * Get all dermatologists.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export const getAll = async (req, res) => {
     try {
 
@@ -14,6 +18,12 @@ export const getAll = async (req, res) => {
 }
 
 
+/**
+ * Get a dermatologist by ID.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export const getdermatologo = async (req, res) => {
     try {
 
@@ -29,6 +39,12 @@ export const getdermatologo = async (req, res) => {
     }
 }
 
+/**
+ * Create a new dermatologist.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export const createdermatologo = async (req, res) => {
     try {
         await dermatologo_model.create(req.body);
@@ -41,7 +57,12 @@ export const createdermatologo = async (req, res) => {
     }
 };
 
-
+/**
+ * Update a new dermatologist.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export const updatedermatologo = async (req, res) => {
     try {
         await dermatologo_model.update(req.body, {
@@ -56,7 +77,12 @@ export const updatedermatologo = async (req, res) => {
     }
 };
 
-
+/**
+ * Delete a new dermatologist.
+ * @async
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 export const deletedermatologo = async (req, res) => {
     try {
         await dermatologo_model.destroy({
